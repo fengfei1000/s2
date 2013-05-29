@@ -1,16 +1,16 @@
 package fengfei.controllers;
 
-import japidviews.Application.Profile.Account;
-import japidviews.Application.Profile.Camera;
-import japidviews.Application.Profile.Notification;
-import japidviews.Application.Profile.Password;
-import japidviews.Application.Profile.Profile;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import play.mvc.With;
-import cn.bran.play.JapidResult;
+import javax.servlet.http.HttpServletRequest;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
 import fengfei.fir.utils.BASE64;
 import fengfei.ucm.dao.DataAccessException;
 import fengfei.ucm.entity.profile.CameraModel;
@@ -21,14 +21,18 @@ import fengfei.ucm.service.UserService;
 import fengfei.ucm.service.impl.CameraServiceImpl;
 import fengfei.ucm.service.impl.UserServiceImpl;
 
-@With(Secure.class)
+@Controller
 public class ProfileAction extends Admin {
-	static UserService userService = new UserServiceImpl();
-	static CameraService cameraService = new CameraServiceImpl();
+	static Logger logger = LoggerFactory.getLogger(ProfileAction.class);
+	UserService userService = new UserServiceImpl();
+	CameraService cameraService = new CameraServiceImpl();
 
-	public static void profile() {
-		Integer idUser = currentUserId();
+	@RequestMapping("/profile")
+	public ModelAndView profile(HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView("profile/profile");
+		Integer idUser = currentUserId(request);
 		System.out.println("user: " + idUser);
+
 		try {
 
 			User user = userService.getUser(idUser);
@@ -37,127 +41,142 @@ public class ProfileAction extends Admin {
 			user.setUserName(up.getUserName());
 			user.userName = up.userName;
 			user.email = up.email;
-			throw new JapidResult(new Profile().render(user));
-		} catch (DataAccessException e) {
-			e.printStackTrace();
-			throw new JapidResult(new Profile().render(new User()));
-		}
+			mv.addObject("user", user);
 
+		} catch (Exception e) {
+			logger.error("profile index error.", e);
+		}
+		return mv;
 	}
 
-	public static void profileDone() {
-		String userName = params.get("username");
-		String email = params.get("email");
-		String niceName = params.get("nicename");
-		String firstName = params.get("firstname");
-		String lastName = params.get("lastname");
-		String country = params.get("country");
-		String state = params.get("state");
-		String city = params.get("city");
-		String about = params.get("about");
-		String sgender = params.get("gender");
+	@RequestMapping("/profile/done")
+	public ModelAndView profileDone(HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView("profile/profile");
+		String userName = request.getParameter("username");
+		String email = request.getParameter("email");
+		String niceName = request.getParameter("nicename");
+		String firstName = request.getParameter("firstname");
+		String lastName = request.getParameter("lastname");
+		String country = request.getParameter("country");
+		String state = request.getParameter("state");
+		String city = request.getParameter("city");
+		String about = request.getParameter("about");
+		String sgender = request.getParameter("gender");
 		Integer gender = Integer.parseInt(sgender);
-		String birthday = params.get("birthday");
-		String phone = params.get("phone");
-		Integer idUser = currentUserId();
+		String birthday = request.getParameter("birthday");
+		String phone = request.getParameter("phone");
+		Integer idUser = currentUserId(request);
 		User user = new User(idUser, userName, email, firstName, lastName,
 				birthday, gender, phone, about, city, state, country);
 		user.setNiceName(niceName);
 		if (idUser == null) {
-			flash.put("error", "Please login!");
-			throw new JapidResult(new Profile().render(user));
-		}
+			mv.addObject("error", "Please login!");
 
+		}
+		mv.addObject("user", user);
 		user.setIdUser(idUser);
 
 		try {
-
 			int updated = userService.saveUser(user);
-			throw new JapidResult(new Profile().render(user));
+
 		} catch (DataAccessException e) {
-			e.printStackTrace();
-			throw new JapidResult(new Profile().render(new User()));
+			logger.error("profile save error.", e);
 
 		}
+		return mv;
 
 	}
 
-	public static void password() {
-		throw new JapidResult(new Password().render());
+	@RequestMapping("/password")
+	public String password() {
+		return "profile/password";
 	}
 
-	public static void passwordDone() {
-		String oldPwd = params.get("oldPassword");
-		String newPwd = params.get("newPassword");
-		String reNewPwd = params.get("reNewPassword");
+	@RequestMapping("/password/done")
+	public ModelAndView passwordDone(HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView("profile/password");
+		String oldPwd = request.getParameter("oldPassword");
+		String newPwd = request.getParameter("newPassword");
+		String reNewPwd = request.getParameter("reNewPassword");
 		if (!newPwd.equals(reNewPwd)) {
-			flash.put("error", "Twice password mismatched, please re-type.");
+			mv.addObject("error", "Twice password mismatched, please re-type.");
 		} else {
-			Integer idUser = currentUserId();
+			Integer idUser = currentUserId(request);
 			if (idUser == null) {
-				flash.put("error", "Please login!");
+				mv.addObject("error", "Please login!");
 				idUser = 1;
 			}
 			try {
 				int updated = userService.updatePassword(idUser,
 						BASE64.encrypt(oldPwd), BASE64.encrypt(newPwd));
 				if (updated == -1) {
-					flash.put("error", "Old password mismatched.");
+					mv.addObject("error", "Old password mismatched.");
 				} else if (updated == 0) {
-					flash.put("error", "New password didn't updated.");
+					mv.addObject("error", "New password didn't updated.");
 				} else {
-					flash.put("success", "New password has updated.");
+					mv.addObject("success", "New password has updated.");
 				}
 
 			} catch (Exception e) {
-				e.printStackTrace();
-				flash.put("error", "New password didn't updated.");
+				mv.addObject("error", "New password didn't updated.");
+				logger.error("password save error.", e);
 			}
 		}
-		throw new JapidResult(new Password().render());
+		return mv;
 	}
 
-	public static void notification() {
-		throw new JapidResult(new Notification().render());
+	@RequestMapping("/notification")
+	public String notification() {
+		return "notification";
 	}
 
-	public static void notificationDone() {
-		throw new JapidResult(new Notification().render());
+	@RequestMapping("/notification/done")
+	public ModelAndView notificationDone() {
+		ModelAndView mv = new ModelAndView("profile/notification");
+		return mv;
 	}
 
-	public static void camera() {
-		Integer idUser = currentUserId();
+	@RequestMapping("/camera")
+	public ModelAndView camera(HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView("profile/camera");
+		Integer idUser = currentUserId(request);
 		if (idUser == null) {
-			flash.put("error", "Please login!");
+			mv.addObject("error", "Please login!");
 			idUser = 1;
 		}
 		try {
 			List<CameraModel> cameras = cameraService.selectForSorted(idUser);
 			System.out.println("xxxx: " + cameras.size());
-			throw new JapidResult(new Camera().render(cameras));
+			mv.addObject("cameras", cameras);
 		} catch (DataAccessException e) {
-			flash.put("error", "Server error!");
-			e.printStackTrace();
-			throw new JapidResult(
-					new Camera().render(new ArrayList<CameraModel>()));
+			mv.addObject("error", "Server error!");
+			mv.addObject("cameras", new ArrayList<>());
+			logger.error("camera error.", e);
 		}
+		return mv;
 
 	}
 
-	public static void cameraDone() {
-		String[] cameras = params.getAll(CameraModel.TypeCamera);
-		String[] lenses = params.getAll(CameraModel.TypeLens);
-		String[] tripods = params.getAll(CameraModel.TypeTripod);
-		String[] filters = params.getAll(CameraModel.TypeFilter);
+	@RequestMapping("/camera/done")
+	public ModelAndView cameraDone(HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView("profile/camera");
+		String[] cameras = request.getParameterValues(CameraModel.TypeCamera);
+		String[] lenses = request.getParameterValues(CameraModel.TypeLens);
+		String[] tripods = request.getParameterValues(CameraModel.TypeTripod);
+		String[] filters = request.getParameterValues(CameraModel.TypeFilter);
 
-		throw new JapidResult(new Camera().render());
+		return mv;
 	}
 
-	public static void account() {
-		throw new JapidResult(new Account().render());
+	@RequestMapping("/account")
+	public ModelAndView account() {
+		ModelAndView mv = new ModelAndView("profile/camera");
+		return mv;
 	}
 
-	public static void accountDone() {
-		throw new JapidResult(new Account().render());
+	@RequestMapping("/account/done")
+	public ModelAndView accountDone() {
+		ModelAndView mv = new ModelAndView("profile/camera");
+		return mv;
 	}
 }

@@ -1,30 +1,32 @@
 package fengfei.controllers;
 
-import japidviews.Application.Login;
-import japidviews.Application.Signup;
-
 import java.util.HashMap;
 import java.util.Map;
 
-import play.mvc.With;
-import cn.bran.play.JapidResult;
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
 import fengfei.fir.utils.BASE64;
 import fengfei.ucm.entity.profile.User;
 import fengfei.ucm.entity.profile.UserPwd;
 import fengfei.ucm.service.UserService;
 import fengfei.ucm.service.impl.UserServiceImpl;
 
-@With(Secure.class)
+@Controller
 public class UserCenter extends Admin {
 
-	static UserService userService = new UserServiceImpl();
+	UserService userService = new UserServiceImpl();
 
-	public static void login() {
-		String e = params.get("email");
-		String p = params.get("password");
-		String rem = params.get("remember");
+	@RequestMapping("/login")
+	public ModelAndView login(HttpServletRequest request) {
+		String e = request.getParameter("email");
+		String p =  request.getParameter("password");
+		String rem =  request.getParameter("remember");
 		rem = "1";
-		String cpage = params.get("cpage");
+		String cpage =  request.getParameter("cpage");
 		if (e == null || p == null) {
 			flash.put("cpage", cpageUrl(request.querystring));
 			System.out.println(flash.get("cpage"));
@@ -58,7 +60,7 @@ public class UserCenter extends Admin {
 
 	}
 
-	public static String cpageUrl(String url) {
+	public String cpageUrl(String url) {
 		if (url == null || "".equals(url)) {
 			return "";
 		} else {
@@ -66,21 +68,21 @@ public class UserCenter extends Admin {
 		}
 	}
 
-	public static void logout() {
+	public void logout() {
 		session.clear();
 		response.removeCookie(COOKIE_EMAIL);
 		response.removeCookie(COOKIE_PASSWORD);
 		throw new JapidResult(new Login().render());
 	}
 
-	public static void logon() {
+	public void logon() {
 		boolean isLogin;
 		Map<String, Object> rs = new HashMap<>();
 		try {
 
-			String e = params.get("email");
-			String p = params.get("password");
-			String rem = params.get("remember");
+			String e =  request.getParameter("email");
+			String p =  request.getParameter("password");
+			String rem =  request.getParameter("remember");
 			isLogin = verify(e, p, rem);
 			System.out.println("ssssssssssss=:  " + isLogin);
 			rs.put("isLogin", isLogin);
@@ -94,7 +96,7 @@ public class UserCenter extends Admin {
 		renderJSON(rs);
 	}
 
-	public static void logoff() {
+	public void logoff() {
 		try {
 			session.clear();
 			response.removeCookie(COOKIE_EMAIL);
@@ -106,8 +108,7 @@ public class UserCenter extends Admin {
 		}
 	}
 
-	private static boolean verify(String email, String passoword,
-			String remember) {
+	private boolean verify(String email, String passoword, String remember) {
 		try {
 			String e = email.trim();
 			String p = passoword.trim();
@@ -133,7 +134,8 @@ public class UserCenter extends Admin {
 					// response.setCookie(COOKIE_PASSWORD, p, "30d");
 					// }
 					User info = userService.getUser(user.getIdUser());
-					if(info.getNiceName()!=null && !"".equals(info.getNiceName())){
+					if (info.getNiceName() != null
+							&& !"".equals(info.getNiceName())) {
 						session.put(SESSION_USER_NAME_KEY, info.getNiceName());
 					}
 
@@ -151,17 +153,17 @@ public class UserCenter extends Admin {
 
 	}
 
-	public static void signup() {
+	public void signup() {
 		throw new JapidResult(new Signup().render(new UserPwd()));
 	}
 
-	public static void register() {
+	public void register() {
 		System.out.println(params.allSimple());
-		String username = params.get("username");
-		String email = params.get("email");
-		String password = params.get("password");
-		String confirm_password = params.get("confirm_password");
-		String cpage = params.get("cpage");
+		String username =  request.getParameter("username");
+		String email =  request.getParameter("email");
+		String password =  request.getParameter("password");
+		String confirm_password =  request.getParameter("confirm_password");
+		String cpage = request.getParameter("cpage");
 		if (!password.equals(confirm_password)) {
 			flash.put("error", "Twice password mismatched.");
 			throw new JapidResult(new Signup().render(new UserPwd(email,

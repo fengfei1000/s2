@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.io.FilenameUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
@@ -31,7 +32,7 @@ public class MongoLorryStorage implements LorryStorage {
 
 	@Override
 	public UploadDone writeFile(Map<String, String> exifs,
-			Map<String, String> contents, File file) {
+			Map<String, String> contents, MultipartFile file) {
 		List<UploadDone> dones = new ArrayList<>();
 		DBCollection coll = db
 				.getCollection(SpruceConstants.PhotoCollectionName);

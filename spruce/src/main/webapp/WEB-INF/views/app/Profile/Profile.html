@@ -1,0 +1,136 @@
+ `import fengfei.ucm.entity.profile.User` `extends japidviews._layouts.Layout`
+  `args User user` `set title:"Sprucy Home Page"` `set header:"Information" `
+
+
+
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span2 ">
+			<div class="sidebar-nav ">`tag SettingsMenu "Profile"`</div>
+		</div>
+		<div class="span9 well offset1">
+			<div class="row-fluid">
+				<div class="span12  ">
+					`if asBoolean(flash.get("error")){`
+
+					<div class="alert alert-error">
+						<button type="button" class="close" data-dismiss="alert">&times;</button>
+						${flash.get("error")}
+					</div>
+
+					`}`
+					<form class="form-horizontal" action="/settings/profile/done"
+						method="post">
+
+
+
+						<div class="control-group ">
+							<label class="control-label" for="gender0">Gender</label>
+							<div class="controls ">
+								<label class="radio inline"> <input type="radio"
+									id="gender1" name="gender" value="1" ${user.gender==1?"checked":""}>
+									Male
+								</label> <label class="radio inline"> <input type="radio"
+									id="gender2" name="gender" value="2" ${user.gender==2?"checked":""}>
+									Female
+								</label> <label class="radio inline"> <input type="radio"
+									id="gender0" name="gender" value="0" ${(user.gender==null
+									|| user.gender==0)?"checked":""}> Not specified
+								</label>
+							</div>
+						</div>
+
+						<div class="control-group">
+							<label class="control-label" for="username">Username</label>
+							<div class="controls">
+								<input type="text" id="username1" name="username1" class="span9"
+									placeholder="Username" value="${user.userName}"
+									disabled="disabled"> <input type="hidden" id="username"
+									name="username" class="span9" value="${user.userName}">
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label" for="email">Email</label>
+							<div class="controls">
+								<input type="text" id="email1" name="email1" class="span9"
+									placeholder="Email" value="${user.email}" disabled="disabled">
+								<input type="hidden" id="email" name="email" class="span9"
+									placeholder="Email" value="${user.email}">
+							</div>
+						</div>		
+						<div class="control-group">
+							<label class="control-label" for="nicename">Nice Name</label>
+							<div class="controls">
+								<input type="text" id="nicename" name="nicename" class="span9"
+									placeholder="Nice Name" value="${user.niceName}">
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label" for="birthday">Birthday</label>
+							<div class="controls">
+								<input type="text" id="birthday" name="birthday" class="span9"
+									placeholder="Birthday" value="${user.birthday}">
+							</div>
+						</div>
+				
+						<div class="control-group">
+							<label class="control-label" for="phone">Phone</label>
+							<div class="controls">
+								<input type="text" id="phone" name="phone" class="span9"
+									placeholder="Phone" value="${user.phoneNum}">
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label" for="firstname">First Name</label>
+							<div class="controls">
+								<input type="text" id="firstname" name="firstname" class="span9"
+									placeholder="First Name" value="${user.firstName}">
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label" for="lastname">Last Name</label>
+							<div class="controls">
+								<input type="text" id="lastname" name="lastname" class="span9"
+									placeholder="Last Name" value="${user.lastName}">
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label" for="location">Location</label>
+							<div class="controls">
+								<input id="city" name="city" class="span9" placeholder="City"
+									type="text" value="${user.city}" /> <input class="span9"
+									id="state" name="state" placeholder="State" type="text"
+									value="${user.state}" /> <input id="country" name="country"
+									class="span9" placeholder="Country" type="text"
+									value="${user.country}" />
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label" for="about">about you</label>
+							<div class="controls">
+								<textarea id="about" name="about" class="span9">${user.about}</textarea>
+							</div>
+						</div>
+
+						<div class="control-group">
+							<div class="controls">
+								<button type="submit" class="btn">Save change</button>
+							</div>
+						</div>
+
+					</form>
+
+
+				</div>
+				<div class="span5"></div>
+			</div>
+
+
+
+		</div>
+	</div>
+
+</div>
+
+</div>
+</div>

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import fengfei.fir.rank.LastRank;
 import fengfei.fir.rank.PopularRank;
@@ -33,8 +34,8 @@ public class ShowController extends Admin {
     public static TopRank top = new TopRank();
 
     @RequestMapping("/show/{id}")
-    public void show(HttpServletRequest request, @PathVariable String id) {
-
+    public ModelAndView show(HttpServletRequest request, @PathVariable String id) {
+        ModelAndView mv = new ModelAndView("app/photo/show");
         try {
             String ip = request.getRemoteAddr();
             String host = request.getRemoteHost();
@@ -44,11 +45,16 @@ public class ShowController extends Admin {
             PhotoModel photo = show.view(idPhoto, sourceId, ip);
             Map<String, String> exif = toMap(photo);
             boolean isFollow = readFollowService.isFollow(null, sourceId, photo.idUser);
-            throw new JapidResult(new Show().render(photo, photo.rank, exif, isFollow));
+
+            mv.addObject("photo", photo);
+            mv.addObject("rank", photo.rank);
+            mv.addObject("exif", exif);
+            mv.addObject("isFollow", isFollow);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        return mv;
     }
 
     private Map<String, String> toMap(PhotoModel photo) {
@@ -73,14 +79,11 @@ public class ShowController extends Admin {
 
     }
 
-    public void showUser(String id) {
-        throw new JapidResult(new Index().render());
-    }
-
-    public void last(String id) {
-        String o = params.get("offset");
-        String c = params.get("count");
-
+    @RequestMapping("/last")
+    public ModelAndView last(HttpServletRequest request) {
+        String o = request.getParameter("offset");
+        String c = request.getParameter("count");
+        ModelAndView mv = new ModelAndView("app/photo/last");
         int offset = o == null || "".equals(o) ? 0 : Integer.parseInt(o);
         int count = c == null || "".equals(c) ? Row : Integer.parseInt(c);
 
@@ -91,42 +94,97 @@ public class ShowController extends Admin {
             // ids.add(refresh.idPhoto);
             // }
 
-            throw new JapidResult(new Views().render(refreshs));
-        } catch (DataAccessException e) {
+        } catch ( Exception e) {
 
             e.printStackTrace();
-            throw new JapidResult(new Index().render());
         }
-
+        return mv;
     }
-
-    public void popular(String id) {
-        String o = params.get("offset");
-        String c = params.get("count");
-
+    
+    @RequestMapping("/popular")
+    public ModelAndView popular(HttpServletRequest request) {
+        String o = request.getParameter("offset");
+        String c = request.getParameter("count");
+        ModelAndView mv = new ModelAndView("app/photo/popular");
         int offset = o == null || "".equals(o) ? 0 : Integer.parseInt(o);
-        int count = c == null || "".equals(c) ? 0 : Integer.parseInt(c);
-        Set<String> ids = popular.find(offset, count);
-        flash.put("ids", ids);
-        throw new JapidResult(new Index().render());
+        int count = c == null || "".equals(c) ? Row : Integer.parseInt(c);
+
+        try { 
+            Set<String> ids = popular.find(offset, count);
+            // for (Refresh refresh : rfs) {
+            // ids.add(refresh.idPhoto);
+            // }
+
+        } catch ( Exception e) {
+
+            e.printStackTrace();
+        }
+        return mv;
     }
 
-    public void top(String id) {
-        String o = params.get("offset");
-        String c = params.get("count");
-
+    @RequestMapping("/top")
+    public ModelAndView top(HttpServletRequest request) {
+        String o = request.getParameter("offset");
+        String c = request.getParameter("count");
+        ModelAndView mv = new ModelAndView("app/photo/top");
         int offset = o == null || "".equals(o) ? 0 : Integer.parseInt(o);
-        int count = c == null || "".equals(c) ? 0 : Integer.parseInt(c);
-        Set<String> ids = top.find(offset, count);
-        flash.put("ids", ids);
-        throw new JapidResult(new Index().render());
+        int count = c == null || "".equals(c) ? Row : Integer.parseInt(c);
+
+        try { 
+            Set<String> ids = top.find(offset, count);
+            // for (Refresh refresh : rfs) {
+            // ids.add(refresh.idPhoto);
+            // }
+
+        } catch ( Exception e) {
+
+            e.printStackTrace();
+        }
+        return mv;
     }
 
-    public void random(String id) {
-        throw new JapidResult(new Index().render());
+    @RequestMapping("/random")
+    public ModelAndView random(HttpServletRequest request) {
+        String o = request.getParameter("offset");
+        String c = request.getParameter("count");
+        ModelAndView mv = new ModelAndView("app/photo/random");
+        int offset = o == null || "".equals(o) ? 0 : Integer.parseInt(o);
+        int count = c == null || "".equals(c) ? Row : Integer.parseInt(c);
+
+        try { 
+//            Set<String> ids = random.find(offset, count);
+            // for (Refresh refresh : rfs) {
+            // ids.add(refresh.idPhoto);
+            // }
+
+        } catch ( Exception e) {
+
+            e.printStackTrace();
+        }
+        return mv;
+    }
+    @RequestMapping("/catalog")
+    public ModelAndView catalog(HttpServletRequest request) {
+        String o = request.getParameter("offset");
+        String c = request.getParameter("count");
+        ModelAndView mv = new ModelAndView("app/photo/catalog");
+        int offset = o == null || "".equals(o) ? 0 : Integer.parseInt(o);
+        int count = c == null || "".equals(c) ? Row : Integer.parseInt(c);
+
+        try { 
+//            Set<String> ids = random.find(offset, count);
+            // for (Refresh refresh : rfs) {
+            // ids.add(refresh.idPhoto);
+            // }
+
+        } catch ( Exception e) {
+
+            e.printStackTrace();
+        }
+        return mv;
     }
 
-    public void catalog(String id) {
-        throw new JapidResult(new Index().render());
-    }
+ 
+ 
+  
 }

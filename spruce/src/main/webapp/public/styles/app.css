@@ -1,0 +1,291 @@
+@CHARSET "UTF-8";
+/*
+layout
+*/
+body {
+	padding-top: 60px;
+}
+
+a {
+	text-decoration: none;
+}
+
+.transform {
+	margin-top: 40px;
+	-moz-transform: rotate(-5deg);
+	-webkit-transform: rotate(-5deg);
+	-o-transform: rotate(-5deg);
+	-ms-transform: rotate(-5deg);
+	transform: rotate(-5deg);
+}
+
+.my_container {
+	 width: 1170px;
+	max-width: 1170px;
+	min-width: 480px;
+}
+  .container,
+  .navbar-static-top .container,
+  .navbar-fixed-top .container,
+  .navbar-fixed-bottom .container {
+    width: 1170px;
+  }
+
+
+.navbar-height {
+	height: 40px;
+	min-height: 40px;
+}
+
+.page-header {
+	padding-bottom: 4px;
+	margin: 0px;
+	border-bottom: 1px solid #eeeeee;
+}
+
+.footer {
+	padding: 70px 0;
+	margin-top: 70px;
+	border-top: 1px solid #e5e5e5;
+	background-color: #f5f5f5;
+}
+
+.footer p {
+	margin-bottom: 0;
+	color: #777;
+}
+
+.footer-links {
+	margin: 10px 0;
+}
+
+.footer-links li {
+	display: inline;
+	margin-right: 10px;
+}
+
+/*
+*/
+.line1 {
+	height: 1px;
+	max-height: 1px;
+}
+
+.line2 {
+	height: 2px;
+	max-height: 2px;
+}
+
+.line3 {
+	height: 3px;
+	max-height: 3px;
+}
+
+.line4 {
+	height: 4px;
+	max-height: 4px;
+}
+
+.line5 {
+	height: 5px;
+	max-height: 5px;
+}
+
+.line6 {
+	height: 6px;
+	max-height: 6px;
+}
+
+.line7 {
+	height: 7px;
+	max-height: 7px;
+}
+
+.line8 {
+	height: 8px;
+	max-height: 8px;
+}
+
+.line9 {
+	height: 9px;
+	max-height: 9px;
+}
+
+.line10 {
+	height: 10px;
+	max-height: 10px;
+}
+
+.stat {
+	background-color: #F5F5F5;
+}
+
+.border-left {
+	border-left: solid 1px #ddd;
+}
+
+.border-bottom {
+	border-bottom: solid 1px #ddd;
+}
+
+.photo-stats {
+	padding: 4px 0px 4px 10px;
+	margin: 0px;
+}
+
+.photo-stats ul.stats {
+	list-style: none;
+	margin: 0px;
+}
+
+.photo-stats ul.stats li {
+	height: 20px;
+	padding: 0px;
+}
+
+.photo-stats ul.stats li small {
+	color: #AAA;
+}
+
+.photo-stats ul.stats li .faded {
+	padding-left: 4px;
+}
+
+.photo-stats ul.exif li .faded {
+	padding-left: 12px;
+}
+
+ul.media-list {
+	margin-left: 0px;
+	padding-left: 0px;
+}
+
+ul li a {
+	margin-left: 0px;
+	text-decoration: none;
+}
+
+/*previews*/
+.previews {
+	margin-left: -18px;
+	list-style: none;
+	*zoom: 1;
+}
+
+.previews:before,.previews:after {
+	display: table;
+	line-height: 0;
+	content: "";
+}
+
+.previews:after {
+	clear: both;
+}
+
+.row-fluid .previews {
+	margin-left: 0;
+}
+
+.previews>li {
+	float: left;
+	margin-bottom: 13px;
+	margin-left: 13px;
+}
+
+.preview {
+	display: block;
+	padding: 1px;
+	width: 280px;
+	height: 280px;
+	max-height: 280px;
+	max-width: 280px;
+	line-height: 20px;
+	border: 1px solid #ddd;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	-webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
+	-moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
+	-webkit-transition: all 0.2s ease-in-out;
+	-moz-transition: all 0.2s ease-in-out;
+	-o-transition: all 0.2s ease-in-out;
+	transition: all 0.2s ease-in-out;
+}
+
+a.preview:hover,a.preview:focus {
+	border-color: #0088cc;
+	-webkit-box-shadow: 0 1px 4px rgba(0, 105, 214, 0.25);
+	-moz-box-shadow: 0 1px 4px rgba(0, 105, 214, 0.25);
+	box-shadow: 0 1px 4px rgba(0, 105, 214, 0.25);
+}
+
+.preview>img {
+	position: relative;
+	margin-top: -50px;
+	z-index: -1;
+	display: block;
+	width: 100%;
+	max-width: 100%;
+	height: 100%;
+	max-height: 100%;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+.preview .caption {
+	overflow: hidden;
+	white-space: nowrap;
+	bottom: 0px;
+	color: #fff;
+	background: #000;
+	background: rgba(0, 0, 0, 0.65);
+	width: 100%;
+	height: 50px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	-webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
+	-moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
+	-webkit-transition: all 0.2s ease-in-out;
+	-moz-transition: all 0.2s ease-in-out;
+	-o-transition: all 0.2s ease-in-out;
+	transition: all 0.2s ease-in-out;
+}
+
+.preview .caption a {
+	color: #fff
+}
+
+.preview .caption a:hover {
+	color: #00afe9
+}
+
+.preview .caption .title {
+	padding: 2px 0px 2px 6px;
+	height: 20px;
+	width: 170px;
+	font-size: 14px;
+	letter-spacing: 1px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	line-height: 20px;
+}
+
+.preview .caption .info {
+	padding: 2px 0px 2px 6px;
+	font-size: 11px;
+	line-height: 20px;
+	height: 20px;
+	position: relative;
+}
+
+.preview .caption .rating {
+	font-size: 18px;
+	padding-right: 6px;
+	position: relative;
+	height: 100%;
+	top: -32px;
+	text-align: right
+}

@@ -1,27 +1,27 @@
 <!DOCTYPE html>
+<html>
+<%@page import="fengfei.controllers.Admin"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="u" uri="/WEB-INF/ui.tld"%>
-<html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <title><u:insert name="title" /></title>
-<u:style src="/css/s.css" />
-<u:script src="/css/s.js" />
-<link rel="stylesheet" media="screen"
-	href="@{'/public/bootstrap/css/bootstrap.min.css'}">
-<!-- <link rel="stylesheet" media="screen"
-	href="@{'/public/bootstrap/css/bootstrap-responsive.min.css'}">
- -->
-<script src="@{'/public/js/jquery-1.9.1.js'}" type="text/javascript"></script>
-<script src="@{'/public/blueimp/md5.min.js'}" type="text/javascript"></script>
-<script src="@{'/public/js/jquery.form.js'}" type="text/javascript"></script>
-<script src="@{'/public/bootstrap/js/bootstrap.min.js'}"
-	type="text/javascript"></script>
-<script src="@{'/public/app/app.js'}" type="text/javascript"></script>
-<link rel="stylesheet" media="screen" href="@{'/public/styles/app.css'}">
+<u:style src="/public/bootstrap/css/bootstrap.min.css" rel="stylesheet"
+	media="screen" />
+<%-- <u:style src="/public/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet"
+	media="screen" /> --%>
+
+<u:script src="/public/js/jquery-1.9.1.js" type="text/javascript" />
+<u:script src="/public/blueimp/md5.min.js" type="text/javascript" />
+<u:script src="/public/js/jquery.form.js" type="text/javascript" />
+<u:script src="/public/bootstrap/js/bootstrap.min.js"
+	type="text/javascript" />
+<u:script src="/public/app/app.js" type="text/javascript" />
+<u:style src="/public/styles/app.css" rel="stylesheet" media="screen" />
 <!--[if lt IE 9]>
-      <script src="@{'/public/js/html5shiv.js'}"></script>
+   <u:script src="/public/js/html5shiv.js" type="text/javascript" />         
 <![endif]-->
 
 </head>

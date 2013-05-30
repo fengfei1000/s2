@@ -40,7 +40,8 @@ public class UserCenterController extends Admin {
         // validation.required(e);
         // validation.required(p);
 
-        if ("".equals(p) ||"".equals(e)) {
+        if ("".equals(p) || "".equals(e)) {
+            mv.addObject("error", "Email or Password is empty.");
             mv.addObject("email", e);
             mv.addObject("password", e);
             return mv;

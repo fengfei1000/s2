@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
 <%@page import="fengfei.controllers.Admin"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -7,8 +8,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form"%>
-
-<head>
 
 <meta charset="UTF-8">
 <title><u:insert name="title" /></title>
@@ -27,6 +26,20 @@
 <!--[if lt IE 9]>
    <u:script src="/public/js/html5shiv.js" type="text/javascript" />         
 <![endif]-->
+
+<link rel="stylesheet" type="text/css" href="/s2/public/bootstrap/css/bootstrap.min.css" media="screen"></link>
+
+
+<script type="text/javascript" href="/s2/public/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" href="/s2/public/blueimp/md5.min.js"></script>
+<script type="text/javascript" href="/s2/public/js/jquery.form.js"></script>
+<script type="text/javascript" href="/s2/public/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" href="/s2/public/app/app.js"></script>
+<link rel="stylesheet" type="text/css" href="/s2/public/styles/app.css" media="screen"></link>
+<!--[if lt IE 9]>
+   <script type="text/javascript" href="/s2/public/js/html5shiv.js"></script>         
+<![endif]-->
+
 <u:insert name="head" />
 </head>
 <body>
@@ -54,7 +67,8 @@
 							data-toggle="dropdown">Shop<b class="caret"></b></a>
 							<ul class="dropdown-menu">
 								<li><a href="${rctx.contextPath}/shop/best">Best</a></li>
-								<li><a href="${rctx.contextPath}/shop/bestSellers">Best Sellers</a></li>
+								<li><a href="${rctx.contextPath}/shop/bestSellers">Best
+										Sellers</a></li>
 								<li><a href="${rctx.contextPath}/shop/random">Random</a></li>
 								<li><a href="${rctx.contextPath}/shop/catalog">Catalog</a></li>
 								<li><a href="${rctx.contextPath}/shop/new">New Show</a></li>
@@ -80,7 +94,8 @@
 					</div> -->
 					<div class="nav pull-right">
 						<div class="btn-group">
-							<a class="btn btn-primary btn-small" href="${rctx.contextPath}/login"><i
+							<a class="btn btn-primary btn-small"
+								href="${rctx.contextPath}/login"><i
 								class="icon-user icon-white"></i>&ensp;Login</a>
 						</div>
 						&ensp;
@@ -91,21 +106,25 @@
 					%>
 					<div class="nav pull-right">
 						<div class="btn-group">
-							<a class="btn btn-primary btn-small" href="${rctx.contextPath}/you"><i
-								class="icon-user icon-white"></i>
-								<%=session.getAttribute(Admin.SESSION_USER_NAME_KEY) %></a> <a
-								class="btn btn-primary btn-small dropdown-toggle"
+							<a class="btn btn-primary btn-small"
+								href="${rctx.contextPath}/you"><i
+								class="icon-user icon-white"></i> <%=session.getAttribute(Admin.SESSION_USER_NAME_KEY)%></a>
+							<a class="btn btn-primary btn-small dropdown-toggle"
 								data-toggle="dropdown" href="#"><span class="caret"></span></a>
 
 							<ul class="dropdown-menu">
-								<li><a href="${rctx.contextPath}/settings/profile"><i class="icon-pencil"></i>Setting</a></li>
-								<li><a href="${rctx.contextPath}/account"><i class="icon-trash"></i>
-										Account</a></li>
-								<li><a href="${rctx.contextPath}/profile"><i class="icon-ban-circle"></i>Profile</a></li>
+								<li><a href="${rctx.contextPath}/settings/profile"><i
+										class="icon-pencil"></i>Setting</a></li>
+								<li><a href="${rctx.contextPath}/account"><i
+										class="icon-trash"></i> Account</a></li>
+								<li><a href="${rctx.contextPath}/profile"><i
+										class="icon-ban-circle"></i>Profile</a></li>
 								<li class="divider"></li>
-								<li><a href="${rctx.contextPath}/store"><i class="i"></i> Store</a></li>
+								<li><a href="${rctx.contextPath}/store"><i class="i"></i>
+										Store</a></li>
 								<li class="divider"></li>
-								<li><a href="${rctx.contextPath}/logout"><i class="i"></i> Logout</a></li>
+								<li><a href="${rctx.contextPath}/logout"><i class="i"></i>
+										Logout</a></li>
 							</ul>
 						</div>
 					</div>
@@ -118,9 +137,11 @@
 								data-toggle="dropdown" href="#"><span class="caret"></span></a>
 
 							<ul class="dropdown-menu">
-								<li><a href="${rctx.contextPath}/upload"><i class="icon-upload"></i>Upload</a></li>
+								<li><a href="${rctx.contextPath}/upload"><i
+										class="icon-upload"></i>Upload</a></li>
 								<li class="divider"></li>
-								<li><a href="${rctx.contextPath}/manage"> <i class="icon-edit"></i> Manage
+								<li><a href="${rctx.contextPath}/manage"> <i
+										class="icon-edit"></i> Manage
 								</a></li>
 							</ul>
 						</div>

@@ -55,21 +55,22 @@
 					</div>
 				</div>
 				<div class="span6">
-					<form class="form-horizontal" method="post" action="${rctx.contextPath}/login${cpage}">
+					<form class="form-horizontal" method="post"
+						action="${rctx.contextPath}/login${cpage}">
 						<div class="control-group">
-							No account yet? <a href="${rc.contextPath}/signup">Sign up</a>
+							No account yet? <a href="${rctx.contextPath}/signup">Sign up</a>
 						</div>
-						<c:if test="${not empty error }">
+						<c:if test="${not empty error}">
 							<div class="alert alert-error control-group">
 								<button type="button" class="close" data-dismiss="alert">&times;</button>
-								${error}
+								${requestScope.error}
 							</div>
 						</c:if>
-
+			
 						<div class="input_control_group">Login with your username or
 							email</div>
 						<div class="input_control_group">
-				
+
 							<input type="text" name="email" id="inputEmail"
 								placeholder="Email or Username" value="${email}" />
 						</div>

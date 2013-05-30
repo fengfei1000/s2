@@ -13,12 +13,12 @@ public class Main1 {
     public static void main(String[] args) {
         ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext(
             "applicationContext.xml");
-        ctx.start();
+//        ctx.start();
         RedisInit init = ctx.getBean(RedisInit.class);
         SliceDBInit init2 = ctx.getBean(SliceDBInit.class);
         System.out.println(init.getHosts());
 
-        ctx.stop();
+//        ctx.stop();
 
     }
 

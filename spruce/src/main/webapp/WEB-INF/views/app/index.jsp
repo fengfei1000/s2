@@ -14,19 +14,7 @@
 		<u:define name="header">Home</u:define>
 
 		<u:define name="body">
-			<div class="btn-group">
-				<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-					Action <span class="caret"></span>
-				</a>
-			<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-				<li><a tabindex="-1" href="#">Action</a></li>
-				<li><a tabindex="-1" href="#">Another action</a></li>
-				<li><a tabindex="-1" href="#">Something else here</a></li>
-				<li class="divider"></li>
-				<li><a tabindex="-1" href="#">Separated link</a></li>
-			</ul>
-			</div>
-		
+	
 			<div class="alert">
 				<button type="button" class="close" data-dismiss="alert">×</button>
 				<strong>Warning!</strong> Best check yo self, you're not looking too

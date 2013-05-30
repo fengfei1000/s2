@@ -7,6 +7,7 @@ public class Refresh {
 	public long idUser;
 	public String userName;
 	public int updateAt;
+	public String path;
 
 	public Refresh() {
 	}
@@ -19,6 +20,14 @@ public class Refresh {
 		this.idUser = idUser;
 		this.userName = userName;
 		this.updateAt = updateAt;
+	}
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
 	}
 
 	public long getIdPhoto() {

@@ -12,7 +12,7 @@ public class IndexController {
 
     @RequestMapping("/index")
     public String index() {
-        return "app/index";
+        return "index";
     }
 
     @RequestMapping("/")
@@ -20,7 +20,7 @@ public class IndexController {
         System.out.println(request.getQueryString());
         HttpSession session = request.getSession();
         System.out.println(session.getId());
-        return "app/index";
+        return "index";
     }
 
     @RequestMapping("/reg")

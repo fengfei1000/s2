@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import fengfei.models.Done;
 import fengfei.models.Done.Status;
 import fengfei.ucm.dao.DataAccessException;
-import fengfei.ucm.service.PhotoService;
-import fengfei.ucm.service.impl.PhotoServiceImpl;
+import fengfei.ucm.repository.PhotoRepository;
+import fengfei.ucm.repository.impl.SqlPhotoRepository;
 
 @Controller
 public class RankAction extends Admin {
 	static Logger logger = LoggerFactory.getLogger(RankAction.class);
-	public static PhotoService photoService = new PhotoServiceImpl();
+	public static PhotoRepository photoService = new SqlPhotoRepository();
 
 	@RequestMapping("/vote/{id}")
 	@ResponseBody

@@ -14,7 +14,6 @@
 </head>
 <body>
 
-	<u:define name="title">Sprucy Home Page</u:define>
 
 	<u:define name="header">Home</u:define>
 

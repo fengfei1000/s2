@@ -16,16 +16,17 @@ import fengfei.ucm.dao.DataAccessException;
 import fengfei.ucm.entity.profile.Camera;
 import fengfei.ucm.entity.profile.User;
 import fengfei.ucm.entity.profile.UserPwd;
-import fengfei.ucm.service.CameraService;
-import fengfei.ucm.service.UserService;
-import fengfei.ucm.service.impl.CameraServiceImpl;
-import fengfei.ucm.service.impl.UserServiceImpl;
+import fengfei.ucm.repository.CameraRepository;
+import fengfei.ucm.repository.UserRepository;
+import fengfei.ucm.repository.impl.SqlCameraRepository;
+import fengfei.ucm.repository.impl.SqlUserRepository;
 
 @Controller
+@RequestMapping("/settings")
 public class ProfileAction extends Admin {
 	static Logger logger = LoggerFactory.getLogger(ProfileAction.class);
-	UserService userService = new UserServiceImpl();
-	CameraService cameraService = new CameraServiceImpl();
+	UserRepository userService = new SqlUserRepository();
+	CameraRepository cameraService = new SqlCameraRepository();
 
 	@RequestMapping("/profile")
 	public ModelAndView profile(HttpServletRequest request) {
@@ -127,7 +128,7 @@ public class ProfileAction extends Admin {
 
 	@RequestMapping("/notification")
 	public String notification() {
-		return "notification";
+		return "profile/notification";
 	}
 
 	@RequestMapping("/notification/done")
@@ -146,7 +147,6 @@ public class ProfileAction extends Admin {
 		}
 		try {
 			List<Camera> cameras = cameraService.selectForSorted(idUser);
-			System.out.println("xxxx: " + cameras.size());
 			mv.addObject("cameras", cameras);
 		} catch (DataAccessException e) {
 			mv.addObject("error", "Server error!");
@@ -170,13 +170,13 @@ public class ProfileAction extends Admin {
 
 	@RequestMapping("/account")
 	public ModelAndView account() {
-		ModelAndView mv = new ModelAndView("profile/camera");
+		ModelAndView mv = new ModelAndView("profile/account");
 		return mv;
 	}
 
 	@RequestMapping("/account/done")
 	public ModelAndView accountDone() {
-		ModelAndView mv = new ModelAndView("profile/camera");
+		ModelAndView mv = new ModelAndView("profile/account");
 		return mv;
 	}
 }

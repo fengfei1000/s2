@@ -15,5 +15,5 @@ public interface ShowRepository extends UnitNames {
 
     Photo get(long idPhoto) throws DataAccessException;
 
-    Photo view(long idPhoto, int idUser, String ip) throws DataAccessException;
+    Photo view(long idPhoto, Integer idUser, String ip) throws DataAccessException;
 }

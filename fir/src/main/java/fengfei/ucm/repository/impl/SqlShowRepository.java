@@ -73,7 +73,7 @@ public class SqlShowRepository implements ShowRepository {
     }
 
     @Override
-    public Photo view(final long idPhoto, final int idUser, final String ip)
+    public Photo view(final long idPhoto, final Integer idUser, final String ip)
         throws DataAccessException {
         try {
             long current = System.currentTimeMillis();

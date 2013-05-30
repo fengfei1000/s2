@@ -30,6 +30,7 @@ public class Photo implements Serializable {
     public String dateTimeOriginal;
     //
     public Rank rank;
+    public String path;
 
     public Photo() {
     }
@@ -124,7 +125,23 @@ public class Photo implements Serializable {
         this.dateTimeOriginal = dateTimeOriginal;
     }
 
-    public int getAdult() {
+    public Rank getRank() {
+		return rank;
+	}
+
+	public void setRank(Rank rank) {
+		this.rank = rank;
+	}
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
+	}
+
+	public int getAdult() {
         return adult;
     }
 

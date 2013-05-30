@@ -63,7 +63,7 @@
 						<c:if test="${not empty error}">
 							<div class="alert alert-error control-group">
 								<button type="button" class="close" data-dismiss="alert">&times;</button>
-								${requestScope.error}
+								${error}
 							</div>
 						</c:if>
 			

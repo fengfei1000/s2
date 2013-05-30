@@ -7,13 +7,13 @@
 
 <ul class="nav nav-list">
 	<li><h4>Profile</h4></li>
-	<li ${Profile}><a href="/settings/profile">Profile</a></li>
-	<li ${Camera}><a href="/settings/camera">Camera</a></li>
-	<li ${Password}><a href="/settings/password">Password</a></li>
-	<li ${Notifications}><a href="/settings/notification">Notifications</a></li>
-	<li ${SocialMedia}><a href="/settings/notification">Social
+	<li ${Profile}><a href="${rctx.contextPath}/settings/profile">Profile</a></li>
+	<li ${Camera}><a href="${rctx.contextPath}/settings/camera">Camera</a></li>
+	<li ${Password}><a href="${rctx.contextPath}/settings/password">Password</a></li>
+	<li ${Notifications}><a href="${rctx.contextPath}/settings/notification">Notifications</a></li>
+	<li ${SocialMedia}><a href="${rctx.contextPath}/settings/notification">Social
 			Media</a></li>
-	<li ${Account}><a href="/settings/account">Account</a></li>
+	<li ${Account}><a href="${rctx.contextPath}/settings/account">Account</a></li>
 	<li><h4>Album</h4></li>
 	<li ${Settings}><a href="#">Settings</a></li>
 	<li ${Themes}><a href="#">Themes</a></li>

@@ -20,7 +20,7 @@ import fengfei.ucm.dao.Transactions.TransactionCallback;
 import fengfei.ucm.entity.photo.PhotoAccess;
 import fengfei.ucm.entity.photo.PhotoAccess.AccessType;
 import fengfei.ucm.entity.photo.Canceled;
-import fengfei.ucm.entity.photo.PhotoModel;
+import fengfei.ucm.entity.photo.Photo;
 import fengfei.ucm.entity.photo.Refresh;
 import fengfei.ucm.repository.PhotoRepository;
 
@@ -28,10 +28,10 @@ import fengfei.ucm.repository.PhotoRepository;
 public class SqlPhotoRepository implements PhotoRepository {
 
     @Override
-    public List<InsertResultSet<Long>> save(List<PhotoModel> models, final String userName)
+    public List<InsertResultSet<Long>> save(List<Photo> models, final String userName)
         throws DataAccessException {
         List<InsertResultSet<Long>> insertResultSets = new ArrayList<>();
-        for (PhotoModel exifModel : models) {
+        for (Photo exifModel : models) {
             InsertResultSet<Long> u = saveOne(exifModel, userName);
             insertResultSets.add(u);
         }
@@ -40,7 +40,7 @@ public class SqlPhotoRepository implements PhotoRepository {
     }
 
     @Override
-    public InsertResultSet<Long> saveOne(final PhotoModel m, final String userName)
+    public InsertResultSet<Long> saveOne(final Photo m, final String userName)
         throws DataAccessException {
         TransactionCallback<InsertResultSet<Long>> callback = new TransactionCallback<InsertResultSet<Long>>() {
 
@@ -60,12 +60,12 @@ public class SqlPhotoRepository implements PhotoRepository {
     }
 
     @Override
-    public PhotoModel selectOne(final long idPhoto, final int idUser) throws DataAccessException {
+    public Photo selectOne(final long idPhoto, final int idUser) throws DataAccessException {
 
-        TransactionCallback<PhotoModel> callback = new TransactionCallback<PhotoModel>() {
+        TransactionCallback<Photo> callback = new TransactionCallback<Photo>() {
 
             @Override
-            public PhotoModel execute(ForestGrower grower, PoolableDatabaseResource resource)
+            public Photo execute(ForestGrower grower, PoolableDatabaseResource resource)
                 throws SQLException {
                 String suffix = resource.getAlias();
                 suffix = "";

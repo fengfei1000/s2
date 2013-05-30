@@ -6,17 +6,17 @@ import com.google.common.collect.ListMultimap;
 
 import fengfei.ucm.dao.DataAccessException;
 import fengfei.ucm.dao.UnitNames;
-import fengfei.ucm.entity.profile.CameraModel;
+import fengfei.ucm.entity.profile.Camera;
 
 public interface CameraRepository extends UnitNames {
-	boolean add(List<CameraModel> models) throws DataAccessException;
+	boolean add(List<Camera> models) throws DataAccessException;
 
-	boolean addOne(CameraModel m) throws DataAccessException;
+	boolean addOne(Camera m) throws DataAccessException;
 
-	List<CameraModel> select(int idUser) throws DataAccessException;
+	List<Camera> select(int idUser) throws DataAccessException;
 
-	List<CameraModel> selectForSorted(int idUser) throws DataAccessException;
+	List<Camera> selectForSorted(int idUser) throws DataAccessException;
 
-	ListMultimap<String, CameraModel> selectGroup(int idUser)
+	ListMultimap<String, Camera> selectGroup(int idUser)
 			throws DataAccessException;
 }

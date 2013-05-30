@@ -13,15 +13,15 @@ import fengfei.ucm.dao.CameraDao;
 import fengfei.ucm.dao.DataAccessException;
 import fengfei.ucm.dao.Transactions;
 import fengfei.ucm.dao.Transactions.TaCallback;
-import fengfei.ucm.entity.profile.CameraModel;
+import fengfei.ucm.entity.profile.Camera;
 import fengfei.ucm.repository.CameraRepository;
 
 public class SqlCameraRepository implements CameraRepository {
 
 	@Override
-	public boolean add(List<CameraModel> models) throws DataAccessException {
+	public boolean add(List<Camera> models) throws DataAccessException {
 		try {
-			for (final CameraModel m : models) {
+			for (final Camera m : models) {
 
 				boolean updated = addOne(m);
 			}
@@ -34,7 +34,7 @@ public class SqlCameraRepository implements CameraRepository {
 	}
 
 	@Override
-	public boolean addOne(final CameraModel m) throws DataAccessException {
+	public boolean addOne(final Camera m) throws DataAccessException {
 		try {
 
 			long id = m.getIdUser();
@@ -58,16 +58,16 @@ public class SqlCameraRepository implements CameraRepository {
 	}
 
 	@Override
-	public List<CameraModel> select(final int idUser)
+	public List<Camera> select(final int idUser)
 			throws DataAccessException {
 		try {
 
-			List<CameraModel> cms = Transactions.execute(UserUnitName,
+			List<Camera> cms = Transactions.execute(UserUnitName,
 					new Long(idUser), Function.Write,
-					new TaCallback<List<CameraModel>>() {
+					new TaCallback<List<Camera>>() {
 
 						@Override
-						public List<CameraModel> execute(ForestGrower grower,
+						public List<Camera> execute(ForestGrower grower,
 								String suffix) throws SQLException {
 							suffix = "";
 							return CameraDao.select(grower, suffix, idUser);
@@ -82,26 +82,26 @@ public class SqlCameraRepository implements CameraRepository {
 	}
 
 	@Override
-	public List<CameraModel> selectForSorted(final int idUser)
+	public List<Camera> selectForSorted(final int idUser)
 			throws DataAccessException {
 		try {
 
-			List<CameraModel> cms = Transactions.execute(UserUnitName,
+			List<Camera> cms = Transactions.execute(UserUnitName,
 					new Long(idUser), Function.Write,
-					new TaCallback<List<CameraModel>>() {
+					new TaCallback<List<Camera>>() {
 
 						@Override
-						public List<CameraModel> execute(ForestGrower grower,
+						public List<Camera> execute(ForestGrower grower,
 								String suffix) throws SQLException {
 							suffix = "";
 							return CameraDao.select(grower, suffix, idUser);
 						}
 
 					});
-			Collections.sort(cms, new Comparator<CameraModel>() {
+			Collections.sort(cms, new Comparator<Camera>() {
 
 				@Override
-				public int compare(CameraModel o1, CameraModel o2) {
+				public int compare(Camera o1, Camera o2) {
 
 					return o1.getType().compareToIgnoreCase(o2.getType());
 				}
@@ -113,16 +113,16 @@ public class SqlCameraRepository implements CameraRepository {
 	}
 
 	@Override
-	public ListMultimap<String, CameraModel> selectGroup(final int idUser)
+	public ListMultimap<String, Camera> selectGroup(final int idUser)
 			throws DataAccessException {
 		try {
 
-			ListMultimap<String, CameraModel> cms = Transactions.execute(
+			ListMultimap<String, Camera> cms = Transactions.execute(
 					UserUnitName, new Long(idUser), Function.Write,
-					new TaCallback<ListMultimap<String, CameraModel>>() {
+					new TaCallback<ListMultimap<String, Camera>>() {
 
 						@Override
-						public ListMultimap<String, CameraModel> execute(
+						public ListMultimap<String, Camera> execute(
 								ForestGrower grower, String suffix)
 								throws SQLException {
 							suffix = "";

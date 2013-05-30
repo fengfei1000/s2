@@ -13,7 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import fengfei.fir.utils.BASE64;
 import fengfei.ucm.dao.DataAccessException;
-import fengfei.ucm.entity.profile.CameraModel;
+import fengfei.ucm.entity.profile.Camera;
 import fengfei.ucm.entity.profile.User;
 import fengfei.ucm.entity.profile.UserPwd;
 import fengfei.ucm.service.CameraService;
@@ -145,7 +145,7 @@ public class ProfileAction extends Admin {
 			idUser = 1;
 		}
 		try {
-			List<CameraModel> cameras = cameraService.selectForSorted(idUser);
+			List<Camera> cameras = cameraService.selectForSorted(idUser);
 			System.out.println("xxxx: " + cameras.size());
 			mv.addObject("cameras", cameras);
 		} catch (DataAccessException e) {
@@ -160,10 +160,10 @@ public class ProfileAction extends Admin {
 	@RequestMapping("/camera/done")
 	public ModelAndView cameraDone(HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView("profile/camera");
-		String[] cameras = request.getParameterValues(CameraModel.TypeCamera);
-		String[] lenses = request.getParameterValues(CameraModel.TypeLens);
-		String[] tripods = request.getParameterValues(CameraModel.TypeTripod);
-		String[] filters = request.getParameterValues(CameraModel.TypeFilter);
+		String[] cameras = request.getParameterValues(Camera.TypeCamera);
+		String[] lenses = request.getParameterValues(Camera.TypeLens);
+		String[] tripods = request.getParameterValues(Camera.TypeTripod);
+		String[] filters = request.getParameterValues(Camera.TypeFilter);
 
 		return mv;
 	}

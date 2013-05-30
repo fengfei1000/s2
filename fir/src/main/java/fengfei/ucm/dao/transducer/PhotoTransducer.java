@@ -5,12 +5,12 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 
 import fengfei.forest.database.dbutils.Transducer;
-import fengfei.ucm.entity.photo.PhotoModel;
+import fengfei.ucm.entity.photo.Photo;
 
-public class PhotoTransducer implements Transducer<PhotoModel> {
+public class PhotoTransducer implements Transducer<Photo> {
 
 	@Override
-	public PhotoModel transform(ResultSet rs) throws SQLException {
+	public Photo transform(ResultSet rs) throws SQLException {
 
 		long idPhoto = rs.getLong("id_photo");
 		int idUser = rs.getInt("id_user");
@@ -36,7 +36,7 @@ public class PhotoTransducer implements Transducer<PhotoModel> {
 		String dateTimeOriginal = rs.getString("original_at");
 		//
 
-		PhotoModel exifModel = new PhotoModel(idPhoto, idUser, title,
+		Photo exifModel = new Photo(idPhoto, idUser, title,
 				description, category, adult, copyright, tags, createAt,
 				createAtGmt, updateAt, commentCount, make, model, aperture,
 				shutter, iso, lens, focus, ev, dateTimeOriginal);

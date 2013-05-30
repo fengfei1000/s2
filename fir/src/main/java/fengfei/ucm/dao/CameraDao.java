@@ -8,17 +8,17 @@ import com.google.common.collect.ListMultimap;
 
 import fengfei.forest.database.dbutils.ForestGrower;
 import fengfei.ucm.dao.transducer.CameraTransducer;
-import fengfei.ucm.entity.profile.CameraModel;
+import fengfei.ucm.entity.profile.Camera;
 
 public class CameraDao {
 	final static String Insert = "INSERT INTO camera_%s(id_user, equipment, type) VALUES (?, ?, ?)";
 
 	public static int[] add(ForestGrower grower, String suffix,
-			List<CameraModel> models) throws SQLException {
+			List<Camera> models) throws SQLException {
 		String insert = String.format(Insert, suffix);
 		Object[][] params = new Object[models.size()][];
 		for (int i = 0; i < params.length; i++) {
-			CameraModel m = models.get(i);
+			Camera m = models.get(i);
 			params[i] = new Object[] { m.getIdUser(), m.getEquipment(),
 					m.getType() };
 		}
@@ -34,7 +34,7 @@ public class CameraDao {
 		return updated;
 	}
 
-	public static int addOne(ForestGrower grower, String suffix, CameraModel m)
+	public static int addOne(ForestGrower grower, String suffix, Camera m)
 			throws SQLException {
 
 		String insert = String.format(Insert, suffix);
@@ -44,23 +44,23 @@ public class CameraDao {
 
 	}
 
-	public static List<CameraModel> select(ForestGrower grower, String suffix,
+	public static List<Camera> select(ForestGrower grower, String suffix,
 			int idUser) throws SQLException {
 		String sql = "SELECT id_user, equipment, type, id_camera FROM camera"
 				+ suffix + " WHERE id_user=?";
-		List<CameraModel> ms = grower.select(sql, new CameraTransducer(),
+		List<Camera> ms = grower.select(sql, new CameraTransducer(),
 				idUser);
 		return ms;
 	}
 
-	public static ListMultimap<String, CameraModel> selectGroup(
+	public static ListMultimap<String, Camera> selectGroup(
 			ForestGrower grower, String suffix, int idUser) throws SQLException {
-		ListMultimap<String, CameraModel> multimap = ArrayListMultimap.create();
+		ListMultimap<String, Camera> multimap = ArrayListMultimap.create();
 		String sql = "SELECT id_user, equipment, type, id_camera FROM camera"
 				+ suffix + " WHERE id_user=?";
-		List<CameraModel> ms = grower.select(sql, new CameraTransducer(),
+		List<Camera> ms = grower.select(sql, new CameraTransducer(),
 				idUser);
-		for (CameraModel m : ms) {
+		for (Camera m : ms) {
 			multimap.put(m.getType(), m);
 		}
 

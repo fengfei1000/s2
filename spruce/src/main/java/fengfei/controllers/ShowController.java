@@ -17,7 +17,7 @@ import fengfei.fir.rank.LastRank;
 import fengfei.fir.rank.PopularRank;
 import fengfei.fir.rank.TopRank;
 import fengfei.ucm.dao.DataAccessException;
-import fengfei.ucm.entity.photo.PhotoModel;
+import fengfei.ucm.entity.photo.Photo;
 import fengfei.ucm.entity.photo.Refresh;
 import fengfei.ucm.service.ReadFollowService;
 import fengfei.ucm.service.ShowService;
@@ -42,7 +42,7 @@ public class ShowController extends Admin {
             System.out.println(ip);
             int sourceId = currentUserId(request);
             long idPhoto = Long.parseLong(id);
-            PhotoModel photo = show.view(idPhoto, sourceId, ip);
+            Photo photo = show.view(idPhoto, sourceId, ip);
             Map<String, String> exif = toMap(photo);
             boolean isFollow = readFollowService.isFollow(null, sourceId, photo.idUser);
 
@@ -57,7 +57,7 @@ public class ShowController extends Admin {
         return mv;
     }
 
-    private Map<String, String> toMap(PhotoModel photo) {
+    private Map<String, String> toMap(Photo photo) {
         Map<String, String> exif = new LinkedHashMap<String, String>();
         put(exif, "Make", photo.make);
         put(exif, "Camera", photo.model);

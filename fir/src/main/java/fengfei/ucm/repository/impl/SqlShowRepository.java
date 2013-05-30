@@ -13,10 +13,10 @@ import fengfei.ucm.dao.Transactions;
 import fengfei.ucm.dao.Transactions.TaCallback;
 import fengfei.ucm.entity.photo.PhotoAccess;
 import fengfei.ucm.entity.photo.PhotoAccess.AccessType;
-import fengfei.ucm.entity.photo.PhotoModel;
+import fengfei.ucm.entity.photo.Photo;
 import fengfei.ucm.entity.photo.Rank;
 import fengfei.ucm.entity.photo.Refresh;
-import fengfei.ucm.entity.profile.CameraModel;
+import fengfei.ucm.entity.profile.Camera;
 import fengfei.ucm.repository.ShowRepository;
 
 public class SqlShowRepository implements ShowRepository {
@@ -48,17 +48,17 @@ public class SqlShowRepository implements ShowRepository {
     }
 
     @Override
-    public PhotoModel get(final long idPhoto) throws DataAccessException {
+    public Photo get(final long idPhoto) throws DataAccessException {
         try {
 
-            PhotoModel photo = Transactions.execute(
+            Photo photo = Transactions.execute(
                 UserUnitName,
                 RefreshKey,
                 Function.Write,
-                new TaCallback<PhotoModel>() {
+                new TaCallback<Photo>() {
 
                     @Override
-                    public PhotoModel execute(ForestGrower grower, String suffix)
+                    public Photo execute(ForestGrower grower, String suffix)
                         throws SQLException {
                         suffix = "";
                         return ShowDao.getPhoto(grower, suffix, idPhoto);
@@ -73,19 +73,19 @@ public class SqlShowRepository implements ShowRepository {
     }
 
     @Override
-    public PhotoModel view(final long idPhoto, final int idUser, final String ip)
+    public Photo view(final long idPhoto, final int idUser, final String ip)
         throws DataAccessException {
         try {
             long current = System.currentTimeMillis();
             final int updateAt = (int) (current / 1000);
-            PhotoModel photo = Transactions.execute(
+            Photo photo = Transactions.execute(
                 UserUnitName,
                 RefreshKey,
                 Function.Write,
-                new TaCallback<PhotoModel>() {
+                new TaCallback<Photo>() {
 
                     @Override
-                    public PhotoModel execute(ForestGrower grower, String suffix)
+                    public Photo execute(ForestGrower grower, String suffix)
                         throws SQLException {
                         suffix = "";
                         int updated = PhotoAccessDao.addPhotoAccess(
@@ -96,7 +96,7 @@ public class SqlShowRepository implements ShowRepository {
                             PhotoAccessDao.updateRank(grower, suffix, idPhoto, AccessType.View, 1);
                         }
                         Rank rank = PhotoAccessDao.getRank(grower, suffix, idPhoto);
-                        PhotoModel photoModel = ShowDao.getPhoto(grower, suffix, idPhoto);
+                        Photo photoModel = ShowDao.getPhoto(grower, suffix, idPhoto);
                         photoModel.rank = rank;
                         return photoModel;
                     }

@@ -6,7 +6,7 @@ import java.util.List;
 import fengfei.forest.database.dbutils.ForestGrower;
 import fengfei.ucm.dao.transducer.PhotoTransducer;
 import fengfei.ucm.dao.transducer.RefreshTransducer;
-import fengfei.ucm.entity.photo.PhotoModel;
+import fengfei.ucm.entity.photo.Photo;
 import fengfei.ucm.entity.photo.Refresh;
 
 public class ShowDao {
@@ -23,10 +23,10 @@ public class ShowDao {
 		return refreshes;
 	}
 
-	public static PhotoModel getPhoto(ForestGrower grower, String suffix,
+	public static Photo getPhoto(ForestGrower grower, String suffix,
 			long idPhoto) throws SQLException {
 
-		PhotoModel photo = grower.selectOne(String.format(GetPhoto, suffix),
+		Photo photo = grower.selectOne(String.format(GetPhoto, suffix),
 				new PhotoTransducer(), idPhoto);
 		return photo;
 	}

@@ -3,7 +3,7 @@ package fengfei.ucm.entity.photo;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class PhotoModel implements Serializable {
+public class Photo implements Serializable {
 
     private static final long serialVersionUID = 1L;
     public long idPhoto;
@@ -31,10 +31,10 @@ public class PhotoModel implements Serializable {
     //
     public Rank rank;
 
-    public PhotoModel() {
+    public Photo() {
     }
 
-    public PhotoModel(
+    public Photo(
         int idUser,
         String title,
         String description,
@@ -78,7 +78,7 @@ public class PhotoModel implements Serializable {
         this.dateTimeOriginal = dateTimeOriginal;
     }
 
-    public PhotoModel(
+    public Photo(
         long idPhoto,
         int idUser,
         String title,

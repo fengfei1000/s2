@@ -2,7 +2,7 @@ package fengfei.ucm.entity.profile;
 
 import java.io.Serializable;
 
-public class CameraModel implements Serializable {
+public class Camera implements Serializable {
 	public final static String TypeCamera = "camera";
 	public final static String TypeLens = "lens";
 	public final static String TypeTripod = "tripod";
@@ -14,10 +14,10 @@ public class CameraModel implements Serializable {
 	public String equipment;
 	public String type;
 
-	public CameraModel() {
+	public Camera() {
 	}
 
-	public CameraModel(int idUser, long idCamera, String equipment, String type) {
+	public Camera(int idUser, long idCamera, String equipment, String type) {
 		super();
 		this.idUser = idUser;
 		this.idCamera = idCamera;

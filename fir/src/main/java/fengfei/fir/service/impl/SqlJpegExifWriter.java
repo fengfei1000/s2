@@ -9,7 +9,7 @@ import org.apache.commons.io.FilenameUtils;
 
 import fengfei.fir.service.JpegExifWriter;
 import fengfei.forest.database.dbutils.impl.ForestRunner.InsertResultSet;
-import fengfei.ucm.entity.photo.PhotoModel;
+import fengfei.ucm.entity.photo.Photo;
 import fengfei.ucm.repository.PhotoRepository;
 import fengfei.ucm.repository.impl.SqlPhotoRepository;
 
@@ -23,7 +23,7 @@ public class SqlJpegExifWriter implements JpegExifWriter {
 			throws Exception {
 		String title = FilenameUtils.getBaseName(imageFile);
 		String userName = contents.get("username");
-		PhotoModel model = toPhotoModel(values, contents);
+		Photo model = toPhotoModel(values, contents);
 		InsertResultSet<Long> rs = repository.saveOne(model, userName);
 		Map<String, Object> rv = new HashMap<>();
 		rv.put(KeyId, rs.autoPk);
@@ -31,7 +31,7 @@ public class SqlJpegExifWriter implements JpegExifWriter {
 		return rv;
 	}
 
-	public PhotoModel toPhotoModel(Map<String, String> exifs,
+	public Photo toPhotoModel(Map<String, String> exifs,
 			Map<String, String> contents) {
 		// System.out.println(exifs);
 		// System.out.println(contents);
@@ -59,7 +59,7 @@ public class SqlJpegExifWriter implements JpegExifWriter {
 		Timestamp createAtGmt = new Timestamp(current);
 
 		long updateAt = current;
-		PhotoModel photoModel = new PhotoModel(idUser, title, description,
+		Photo photoModel = new Photo(idUser, title, description,
 				category, adult, copyright, tags, createAt, createAtGmt,
 				updateAt, -1, make, model, aperture, shutter, iso, lens, focus,
 				ev, dateTimeOriginal);

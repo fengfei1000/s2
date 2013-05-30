@@ -6,7 +6,7 @@ import java.sql.Timestamp;
 
 import fengfei.forest.database.dbutils.Transducer;
 import fengfei.ucm.entity.photo.Comment;
-import fengfei.ucm.entity.photo.PhotoModel;
+import fengfei.ucm.entity.photo.Photo;
 
 public class CommentTransducer implements Transducer<Comment> {
 

@@ -19,7 +19,7 @@ import fengfei.fir.model.UploadDone;
 import fengfei.fir.service.JpegExifWriter;
 import fengfei.fir.service.LorryStorage;
 import fengfei.sprucy.Spruce;
-import fengfei.ucm.entity.photo.PhotoModel;
+import fengfei.ucm.entity.photo.Photo;
 
 public class LorryAction extends Admin {
 
@@ -88,7 +88,7 @@ public class LorryAction extends Admin {
         String[] dateTimeOriginal = taken_at;// request.getParameterValues("dateTimeOriginal");
         String[] ids = request.getParameterValues("id");
 
-        final List<PhotoModel> models = new ArrayList<>();
+        final List<Photo> models = new ArrayList<>();
         Integer idUser = currentUserId(request);
         long currentTime = System.currentTimeMillis();
         int createAt = (int) currentTime / 1000;

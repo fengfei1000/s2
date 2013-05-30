@@ -38,10 +38,10 @@ public class MongoLorryStorage implements LorryStorage {
 				.getCollection(SpruceConstants.PhotoCollectionName);
 		UploadDone done = null;
 
-		if (file.exists()) {
+		if (!file.isEmpty()) {
 
-			String extName = FilenameUtils.getExtension(file.getAbsolutePath());
-			String path = FilenameUtils.getFullPath(file.getAbsolutePath());
+			String extName = FilenameUtils.getExtension(file.getOriginalFilename());
+			String path = FilenameUtils.getFullPath(file.getOriginalFilename());
 			try {
 				int num = getPreviewNumber();
 
@@ -53,19 +53,19 @@ public class MongoLorryStorage implements LorryStorage {
 				photo.putAll(exifs);
 
 				Map<Integer, int[]> dimensions = getPreviewDimensions();
-				for (int j = 1; j <= num; j++) {
-					int[] wh = dimensions.get(j);
-					String srcImgFileName = file.getAbsolutePath();
-					String newFileName = path + j + extName;
-					jpegProcess.cropAndResize(srcImgFileName, newFileName,
-							wh[0], wh[1]);
-					BasicDBObject subPhoto = new BasicDBObject();
-					byte[] data = getFileByte(file);
-					subPhoto.put("preview_id", j);
-					subPhoto.put("data", data);
-					coll.createIndex(new BasicDBObject("p" + j, 1));
-					photo.put("p" + j, subPhoto);
-				}
+//				for (int j = 1; j <= num; j++) {
+//					int[] wh = dimensions.get(j);
+//					String srcImgFileName = file.getAbsolutePath();
+//					String newFileName = path + j + extName;
+//					jpegProcess.cropAndResize(srcImgFileName, newFileName,
+//							wh[0], wh[1]);
+//					BasicDBObject subPhoto = new BasicDBObject();
+//					byte[] data = getFileByte(file);
+//					subPhoto.put("preview_id", j);
+//					subPhoto.put("data", data);
+//					coll.createIndex(new BasicDBObject("p" + j, 1));
+//					photo.put("p" + j, subPhoto);
+//				}
 				WriteResult wr = coll.insert(photo);
 				done = new UploadDone(0, "");
 			} catch (Exception e) {

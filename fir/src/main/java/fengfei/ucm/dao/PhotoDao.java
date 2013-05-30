@@ -9,7 +9,7 @@ import fengfei.forest.database.dbutils.ForestGrower;
 import fengfei.forest.database.dbutils.StringTransducer;
 import fengfei.forest.database.dbutils.impl.ForestRunner.InsertResultSet;
 import fengfei.ucm.dao.transducer.PhotoTransducer;
-import fengfei.ucm.entity.photo.PhotoModel;
+import fengfei.ucm.entity.photo.Photo;
 import fengfei.ucm.entity.photo.Rank;
 import fengfei.ucm.entity.photo.Refresh;
 
@@ -21,10 +21,10 @@ public class PhotoDao {
         ForestGrower grower,
         String suffix,
         String userName,
-        List<PhotoModel> models) throws SQLException {
+        List<Photo> models) throws SQLException {
 
         List<InsertResultSet<Long>> insertResultSets = new ArrayList<>();
-        for (PhotoModel exifModel : models) {
+        for (Photo exifModel : models) {
             InsertResultSet<Long> u = saveOne(grower, suffix, exifModel, userName);
             insertResultSets.add(u);
         }
@@ -48,7 +48,7 @@ public class PhotoDao {
     public static InsertResultSet<Long> saveOne(
         ForestGrower grower,
         String suffix,
-        PhotoModel m,
+        Photo m,
         String userName) throws SQLException {
         String sql = "SELECT  id_photo    FROM photos" + suffix + " WHERE id_photo=?";
         String id = grower.selectOne(sql, new StringTransducer(), m.idPhoto);
@@ -132,11 +132,11 @@ public class PhotoDao {
         return u;
     }
 
-    public static PhotoModel selectOne(ForestGrower grower, String suffix, long idPhoto)
+    public static Photo selectOne(ForestGrower grower, String suffix, long idPhoto)
         throws SQLException {
         String sql = "SELECT id_photo, id_user, title, `desc`, category,adult,copyright, create_at, create_at_gmt, update_at, comment_count, original_at, make, model, aperture, shutter, iso, lens, focus, tags, ev"
                 + "FROM photos" + suffix + " WHERE id_photo=?";
-        PhotoModel exifModel = grower.selectOne(sql, new PhotoTransducer(), idPhoto);
+        Photo exifModel = grower.selectOne(sql, new PhotoTransducer(), idPhoto);
         return exifModel;
 
     }

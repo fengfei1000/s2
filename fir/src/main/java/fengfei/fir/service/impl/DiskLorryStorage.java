@@ -45,16 +45,20 @@ public class DiskLorryStorage implements LorryStorage {
             long id = MapUtils.getLongValue(rv, JpegExifWriter.KeyId);
             // int id = AutoIncrUtils.next(db,
             // SpruceConstants.PhotoCollectionName);
-            int index = file.getName().lastIndexOf('.');
-            String extName = file.getName().substring(index);
-
-            StringBuilder sbPath = Path.getPath(Path.UPLOAD_PATH, id);
-            String path = sbPath.toString();
-            String jpgPath = sbPath.append(0).append(extName).toString();
+            // int index = file.getName().lastIndexOf('.');
+            // String extName = file.getName().substring(index);
+            //
+            // StringBuilder sbPath = Path.getPath(Path.UPLOAD_PATH, id);
+            // String path = sbPath.toString();
+            // String jpgPath = sbPath.append(0).append(extName).toString();
             // System.out.printf("path=%s id=%d\n", path, id);
-            // String jpgPath=Path.getJpegUploadPath(id, 0);
+            String jpgPath = Path.getJpegUploadPath(id, 0);
             try {
                 File jpegFile = new File(jpgPath);
+                if (!jpegFile.exists()) {
+                    jpegFile.getParentFile().mkdirs();
+                }
+                System.out.println(jpegFile.getAbsolutePath());
                 InputStream in = file.getInputStream();
                 FileOutputStream out = new FileOutputStream(jpegFile);
                 byte[] bs = new byte[4098];
@@ -78,7 +82,8 @@ public class DiskLorryStorage implements LorryStorage {
                 Map<Integer, int[]> dimensions = getPreviewDimensions();
                 for (int j = 1; j <= num; j++) {
                     int[] wh = dimensions.get(j);
-                    String newFileName = path + j + extName;
+                    // String newFileName = path + j + extName;
+                    String newFileName = Path.getJpegUploadPath(id, j);
                     jpegProcess.cropAndResize(srcImgFileName, newFileName, wh[0], wh[1]);
 
                 }

@@ -1,4 +1,4 @@
-package fire.authority;
+package fengfei.web.authority;
 
 public class AuthorityHelper {
 

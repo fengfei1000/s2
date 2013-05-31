@@ -31,6 +31,10 @@
 		<!-- Changes the locale when a 'locale' request parameter is sent; e.g. 
 			/?locale=de -->
 		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" />
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<bean class="fengfei.web.interceptor.LoginAnnotationInterceptor" />
+		</mvc:interceptor>
 	</mvc:interceptors>
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 

@@ -9,7 +9,6 @@ $(function() {
 	'use strict';
 
 	// Change this to the location of your server-side upload handler:
-	var url = "/upload/done";
 	var uploadButton = $(
 			'<button class="btn btn-primary" id="start" type="button">	<i class="icon-upload icon-white"></i>Save</button>')
 			.prop('disabled', true).text('Processing...').on(
@@ -87,6 +86,8 @@ $(function() {
 		// alert(data.files.length);
 	}).bind('fileuploadprogressall', function(e, data) {
 		// alert(data.files.length);
+		var progress = parseInt(data.loaded / data.total * 100, 10);
+		$('#progress .bar').css('width', progress + '%');
 	}).bind(
 			'fileuploadprocessalways',
 			function(e, data) {
@@ -128,10 +129,10 @@ $(function() {
 		// The example input, doesn't have to be part of the upload form:
 		var formData = $('#fileuploadForm').serializeArray();
 		data.formData = formData;
-//		if (!data.formData.example) {
-//			input.focus();
-//			return false;
-//		}
+		// if (!data.formData.example) {
+		// input.focus();
+		// return false;
+		// }
 	});
 });
 var formatFileSize = function(bytes) {

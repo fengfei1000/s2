@@ -20,163 +20,180 @@ import fengfei.ucm.repository.CameraRepository;
 import fengfei.ucm.repository.UserRepository;
 import fengfei.ucm.repository.impl.SqlCameraRepository;
 import fengfei.ucm.repository.impl.SqlUserRepository;
+import fengfei.web.authority.Authority;
+import fengfei.web.authority.Role;
 
 @Controller
 @RequestMapping("/settings")
+@Authority(role = Role.LoggedIn)
 public class ProfileAction extends Admin {
-	static Logger logger = LoggerFactory.getLogger(ProfileAction.class);
-	UserRepository userService = new SqlUserRepository();
-	CameraRepository cameraService = new SqlCameraRepository();
 
-	@RequestMapping("/profile")
-	public ModelAndView profile(HttpServletRequest request) {
-		ModelAndView mv = new ModelAndView("profile/profile");
-		Integer idUser = currentUserId(request);
-		System.out.println("user: " + idUser);
+    static Logger logger = LoggerFactory.getLogger(ProfileAction.class);
+    UserRepository userService = new SqlUserRepository();
+    CameraRepository cameraService = new SqlCameraRepository();
 
-		try {
+    @RequestMapping("/profile")
+    public ModelAndView profile(HttpServletRequest request) {
+        ModelAndView mv = new ModelAndView("profile/profile");
+        Integer idUser = currentUserId(request);
+        System.out.println("user: " + idUser);
 
-			User user = userService.getUser(idUser);
-			UserPwd up = userService.getUserPwd(idUser);
-			user.setEmail(up.getEmail());
-			user.setUserName(up.getUserName());
-			user.userName = up.userName;
-			user.email = up.email;
-			mv.addObject("user", user);
+        try {
 
-		} catch (Exception e) {
-			logger.error("profile index error.", e);
-		}
-		return mv;
-	}
+            User user = userService.getUser(idUser);
+            UserPwd up = userService.getUserPwd(idUser);
+            user.setEmail(up.getEmail());
+            user.setUserName(up.getUserName());
+            user.userName = up.userName;
+            user.email = up.email;
+            mv.addObject("user", user);
 
-	@RequestMapping("/profile/done")
-	public ModelAndView profileDone(HttpServletRequest request) {
-		ModelAndView mv = new ModelAndView("profile/profile");
-		String userName = request.getParameter("username");
-		String email = request.getParameter("email");
-		String niceName = request.getParameter("nicename");
-		String firstName = request.getParameter("firstname");
-		String lastName = request.getParameter("lastname");
-		String country = request.getParameter("country");
-		String state = request.getParameter("state");
-		String city = request.getParameter("city");
-		String about = request.getParameter("about");
-		String sgender = request.getParameter("gender");
-		Integer gender = Integer.parseInt(sgender);
-		String birthday = request.getParameter("birthday");
-		String phone = request.getParameter("phone");
-		Integer idUser = currentUserId(request);
-		User user = new User(idUser, userName, email, firstName, lastName,
-				birthday, gender, phone, about, city, state, country);
-		user.setNiceName(niceName);
-		if (idUser == null) {
-			mv.addObject("error", "Please login!");
+        } catch (Exception e) {
+            logger.error("profile index error.", e);
+        }
+        return mv;
+    }
 
-		}
-		mv.addObject("user", user);
-		user.setIdUser(idUser);
+    @RequestMapping("/profile/done")
+    public ModelAndView profileDone(HttpServletRequest request) {
+        ModelAndView mv = new ModelAndView("profile/profile");
+        String userName = request.getParameter("username");
+        String email = request.getParameter("email");
+        String niceName = request.getParameter("nicename");
+        String firstName = request.getParameter("firstname");
+        String lastName = request.getParameter("lastname");
+        String country = request.getParameter("country");
+        String state = request.getParameter("state");
+        String city = request.getParameter("city");
+        String about = request.getParameter("about");
+        String sgender = request.getParameter("gender");
+        Integer gender = Integer.parseInt(sgender);
+        String birthday = request.getParameter("birthday");
+        String phone = request.getParameter("phone");
+        Integer idUser = currentUserId(request);
+        User user = new User(
+            idUser,
+            userName,
+            email,
+            firstName,
+            lastName,
+            birthday,
+            gender,
+            phone,
+            about,
+            city,
+            state,
+            country);
+        user.setNiceName(niceName);
+        if (idUser == null) {
+            mv.addObject("error", "Please login!");
 
-		try {
-			int updated = userService.saveUser(user);
+        }
+        mv.addObject("user", user);
+        user.setIdUser(idUser);
 
-		} catch (DataAccessException e) {
-			logger.error("profile save error.", e);
+        try {
+            int updated = userService.saveUser(user);
 
-		}
-		return mv;
+        } catch (DataAccessException e) {
+            logger.error("profile save error.", e);
 
-	}
+        }
+        return mv;
 
-	@RequestMapping("/password")
-	public String password() {
-		return "profile/password";
-	}
+    }
 
-	@RequestMapping("/password/done")
-	public ModelAndView passwordDone(HttpServletRequest request) {
-		ModelAndView mv = new ModelAndView("profile/password");
-		String oldPwd = request.getParameter("oldPassword");
-		String newPwd = request.getParameter("newPassword");
-		String reNewPwd = request.getParameter("reNewPassword");
-		if (!newPwd.equals(reNewPwd)) {
-			mv.addObject("error", "Twice password mismatched, please re-type.");
-		} else {
-			Integer idUser = currentUserId(request);
-			if (idUser == null) {
-				mv.addObject("error", "Please login!");
-				idUser = 1;
-			}
-			try {
-				int updated = userService.updatePassword(idUser,
-						BASE64.encrypt(oldPwd), BASE64.encrypt(newPwd));
-				if (updated == -1) {
-					mv.addObject("error", "Old password mismatched.");
-				} else if (updated == 0) {
-					mv.addObject("error", "New password didn't updated.");
-				} else {
-					mv.addObject("success", "New password has updated.");
-				}
+    @RequestMapping("/password")
+    public String password() {
+        return "profile/password";
+    }
 
-			} catch (Exception e) {
-				mv.addObject("error", "New password didn't updated.");
-				logger.error("password save error.", e);
-			}
-		}
-		return mv;
-	}
+    @RequestMapping("/password/done")
+    public ModelAndView passwordDone(HttpServletRequest request) {
+        ModelAndView mv = new ModelAndView("profile/password");
+        String oldPwd = request.getParameter("oldPassword");
+        String newPwd = request.getParameter("newPassword");
+        String reNewPwd = request.getParameter("reNewPassword");
+        if (!newPwd.equals(reNewPwd)) {
+            mv.addObject("error", "Twice password mismatched, please re-type.");
+        } else {
+            Integer idUser = currentUserId(request);
+            if (idUser == null) {
+                mv.addObject("error", "Please login!");
+                idUser = 1;
+            }
+            try {
+                int updated = userService.updatePassword(
+                    idUser,
+                    BASE64.encrypt(oldPwd),
+                    BASE64.encrypt(newPwd));
+                if (updated == -1) {
+                    mv.addObject("error", "Old password mismatched.");
+                } else if (updated == 0) {
+                    mv.addObject("error", "New password didn't updated.");
+                } else {
+                    mv.addObject("success", "New password has updated.");
+                }
 
-	@RequestMapping("/notification")
-	public String notification() {
-		return "profile/notification";
-	}
+            } catch (Exception e) {
+                mv.addObject("error", "New password didn't updated.");
+                logger.error("password save error.", e);
+            }
+        }
+        return mv;
+    }
 
-	@RequestMapping("/notification/done")
-	public ModelAndView notificationDone() {
-		ModelAndView mv = new ModelAndView("profile/notification");
-		return mv;
-	}
+    @RequestMapping("/notification")
+    public String notification() {
+        return "profile/notification";
+    }
 
-	@RequestMapping("/camera")
-	public ModelAndView camera(HttpServletRequest request) {
-		ModelAndView mv = new ModelAndView("profile/camera");
-		Integer idUser = currentUserId(request);
-		if (idUser == null) {
-			mv.addObject("error", "Please login!");
-			idUser = 1;
-		}
-		try {
-			List<Camera> cameras = cameraService.selectForSorted(idUser);
-			mv.addObject("cameras", cameras);
-		} catch (DataAccessException e) {
-			mv.addObject("error", "Server error!");
-			mv.addObject("cameras", new ArrayList<>());
-			logger.error("camera error.", e);
-		}
-		return mv;
+    @RequestMapping("/notification/done")
+    public ModelAndView notificationDone() {
+        ModelAndView mv = new ModelAndView("profile/notification");
+        return mv;
+    }
 
-	}
+    @RequestMapping("/camera")
+    public ModelAndView camera(HttpServletRequest request) {
+        ModelAndView mv = new ModelAndView("profile/camera");
+        Integer idUser = currentUserId(request);
+        if (idUser == null) {
+            mv.addObject("error", "Please login!");
+            idUser = 1;
+        }
+        try {
+            List<Camera> cameras = cameraService.selectForSorted(idUser);
+            mv.addObject("cameras", cameras);
+        } catch (DataAccessException e) {
+            mv.addObject("error", "Server error!");
+            mv.addObject("cameras", new ArrayList<>());
+            logger.error("camera error.", e);
+        }
+        return mv;
 
-	@RequestMapping("/camera/done")
-	public ModelAndView cameraDone(HttpServletRequest request) {
-		ModelAndView mv = new ModelAndView("profile/camera");
-		String[] cameras = request.getParameterValues(Camera.TypeCamera);
-		String[] lenses = request.getParameterValues(Camera.TypeLens);
-		String[] tripods = request.getParameterValues(Camera.TypeTripod);
-		String[] filters = request.getParameterValues(Camera.TypeFilter);
+    }
 
-		return mv;
-	}
+    @RequestMapping("/camera/done")
+    public ModelAndView cameraDone(HttpServletRequest request) {
+        ModelAndView mv = new ModelAndView("profile/camera");
+        String[] cameras = request.getParameterValues(Camera.TypeCamera);
+        String[] lenses = request.getParameterValues(Camera.TypeLens);
+        String[] tripods = request.getParameterValues(Camera.TypeTripod);
+        String[] filters = request.getParameterValues(Camera.TypeFilter);
 
-	@RequestMapping("/account")
-	public ModelAndView account() {
-		ModelAndView mv = new ModelAndView("profile/account");
-		return mv;
-	}
+        return mv;
+    }
 
-	@RequestMapping("/account/done")
-	public ModelAndView accountDone() {
-		ModelAndView mv = new ModelAndView("profile/account");
-		return mv;
-	}
+    @RequestMapping("/account")
+    public ModelAndView account() {
+        ModelAndView mv = new ModelAndView("profile/account");
+        return mv;
+    }
+
+    @RequestMapping("/account/done")
+    public ModelAndView accountDone() {
+        ModelAndView mv = new ModelAndView("profile/account");
+        return mv;
+    }
 }

@@ -67,19 +67,23 @@
 	<u:script src="/public/js/binaryajax.js"></u:script>
 	<u:script src="/public/js/exif.js"></u:script>
 	<u:script src="/public/app/ExifUtils.js"></u:script>
+
 	<u:script src="/public/app/upload.js"></u:script>
+	<script type="text/javascript">
+		var url = "${rctx.contextPath}/upload/done";
+	</script>
+
 </u:define>
 </head>
 <body>
-
 
 	<u:define name="header">Home</u:define>
 
 	<u:define name="body">
 
 
-		<form id="fileuploadForm" action="${rctx.contextPath}/upload/done" method="POST"
-			enctype="multipart/form-data">
+		<form id="fileuploadForm" action="${rctx.contextPath}/upload/done"
+			method="POST" enctype="multipart/form-data">
 
 			<span class="btn btn-success fileinput-button"> <i
 				class="icon-plus icon-white"></i> <span>Add files...</span> <!-- The file input field used as target for the file upload widget -->

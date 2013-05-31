@@ -9,6 +9,7 @@ public class Admin {
 
 	public final static String SESSION_LOGIN_KEY = "islogin";
 	public final static String SESSION_USER_KEY = "USER";
+	public final static String SESSION_USER_AUTH_KEY = "USER_AUTH";
 	public final static String SESSION_USER_NAME_KEY = "USER_DISPLAY_NAME";
 	public final static String COOKIE_EMAIL = "spruce_email";
 	public final static String COOKIE_PASSWORD = "spruce_pwd";

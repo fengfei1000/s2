@@ -13,7 +13,7 @@
     ">
 	<bean class="fengfei.fir.db.RedisInit" init-method="onApplicationStart" />
 	<bean class="fengfei.fir.db.SliceDBInit" init-method="onApplicationStart" />
-	<bean class="app.init.AppInitPlugin" init-method="onApplicationStart" />
+	<bean class="fengfei.web.app.init.AppInitPlugin" init-method="onApplicationStart" />
 
 
 

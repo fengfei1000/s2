@@ -1,9 +1,8 @@
-<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
-         http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
-	metadata-complete="true">
-
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	metadata-complete="true" version="3.0">
 	<display-name>spruce</display-name>
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
@@ -13,7 +12,6 @@
 		<welcome-file>default.htm</welcome-file>
 		<welcome-file>default.jsp</welcome-file>
 	</welcome-file-list>
-
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>classpath:META-INF/spring/applicationContext.xml</param-value>
@@ -21,7 +19,14 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-
+	<filter>
+		<filter-name>PhotoFilter</filter-name>
+		<filter-class>fengfei.web.filter.PhotoFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>PhotoFilter</filter-name>
+		<url-pattern>/photo/*</url-pattern>
+	</filter-mapping>
 	<filter>
 		<filter-name>characterEncodingFilter</filter-name>
 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
@@ -34,7 +39,6 @@
 			<param-value>true</param-value>
 		</init-param>
 	</filter>
-
 	<filter-mapping>
 		<filter-name>characterEncodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>
@@ -52,5 +56,4 @@
 		<servlet-name>springDispatcher</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-
 </web-app>
